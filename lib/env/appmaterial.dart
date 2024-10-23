@@ -16,5 +16,14 @@ genratetheme(){
 }
 
 genratreroutes(){
-  return [GetPage(name: "/", page:()=>const Splash())];
+  return [GetPage(name: "/", page:()=>const Splash()),
+  GetPage(name: "/login", page: ()=> const Login())
+  ];
+}
+
+navigatepage({page,arguments}){
+  Get.toNamed(page,arguments: arguments);
+}
+goback(){
+  Get.back();
 }

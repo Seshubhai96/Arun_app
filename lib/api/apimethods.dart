@@ -1,16 +1,26 @@
-import 'dart:developer';
+import 'dart:convert';
 
 import 'package:arunmall/env/appexports.dart';
 
-class Apimethods extends GetConnect{
-  Future<Response> loginmethod({body,endpoint})async{
+class Api extends GetConnect{
+  Future<dynamic>? loginmethod({body,endpoint})async{
     try {
       final url = "$baseurl$endpoint";
       final response =  await post(url, body,headers: headers);
-      log(response.body.toString());
-      return response.body;
+      final extractres = json.decode(response.body);
+      return extractres?["data"];
     } catch (e) {
-      return const Response(body: null);
+      return null;
+    }
+  }
+  Future<dynamic>? postmethod({body,endpoint})async{
+    try {
+      final url = "$baseurl$endpoint";
+      final response =  await post(url, body,headers: domainheaders());
+      final extractres = json.decode(response.body);
+      return extractres?["data"];
+    } catch (e) {
+      return null;
     }
   }
 }

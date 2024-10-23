@@ -1,6 +1,6 @@
 import 'package:arunmall/env/appexports.dart';
 
-const baseurl = "https://api.bluhealthapp.com/api/";
+const baseurl = "http://localhost:8081/api/v1/";
 
 
 const headers = {
