@@ -9,13 +9,16 @@ try {
   isloginloading.value=true;
   final box = GetStorage();
   final response = await Api().loginmethod(body: body,endpoint: endpoint);
+  //log("Login Response $response");
   if(response!=null){
-    box.write("type", response["type"]);
-    box.write("token",response?["token"]);
-    navigateuser();
+    log("Response $response");
+    // box.write("type", response["type"]);
+    // box.write("token",response?["token"]);
+    //navigateuser();
   }
   isloginloading.value= false;
 } catch (e) {
+  log("Login Error ${e.toString()}");
   isloginloading.value=false;
 }
   }
