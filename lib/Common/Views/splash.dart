@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:arunmall/controller/logincontroller.dart';
+
 import 'package:arunmall/env/appexports.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 

@@ -6,9 +6,21 @@ export 'package:flutter/services.dart';
 export 'package:arunmall/env/appmaterial.dart';
 export 'package:arunmall/env/appcolors.dart';
 export 'package:arunmall/env/appconstants.dart';
+export 'package:arunmall/env/appwidgtes.dart';
+export 'package:arunmall/env/appvalidator.dart';
 // apimethods
 export 'package:arunmall/api/apimethods.dart';
 export 'package:arunmall/env/appformatters.dart';
-// pages
-export 'package:arunmall/views/splash.dart';
-export 'package:arunmall/views/login.dart';
+// Common
+export 'package:arunmall/Common/Views/splash.dart';
+
+//Auth
+export 'package:arunmall/Auth/controller/logincontroller.dart';
+export 'package:arunmall/Auth/Views/login.dart';
+
+// Admin
+export 'package:arunmall/Admin/Views/adminlanding.dart';
+//Hotel
+export 'package:arunmall/Hotel/Views/hotelanding.dart';
+//Shop
+export 'package:arunmall/Shop/Views/shoplanding.dart';

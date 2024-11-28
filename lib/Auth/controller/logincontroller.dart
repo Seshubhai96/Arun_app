@@ -12,8 +12,8 @@ try {
   //log("Login Response $response");
   if(response!=null){
     log("Response $response");
-    // box.write("type", response["type"]);
-    // box.write("token",response?["token"]);
+    box.write("type", response["type"]);
+    box.write("token",response?["token"]);
     //navigateuser();
   }
   isloginloading.value= false;
@@ -26,13 +26,13 @@ try {
     final box = GetStorage();
     final role = box.read("type");
     if(role=="Owner"){
-log("owner");
+      navigatepage(page: "/owner",navigationtype: Get.offNamed);
     }else if(role=="Shop"){
 log("shop");
     }else if(role=="Lodge"){
 log("other");
     }else{
-      navigatepage(page: "/login");
+      navigatepage(page: "/login",navigationtype: Get.offNamed);
     }
   }
 }
