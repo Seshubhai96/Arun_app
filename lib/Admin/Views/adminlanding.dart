@@ -26,7 +26,7 @@ class _AdminlandingState extends State<Adminlanding> {
           SpeedDialChild(child: Icon(Icons.post_add)),
           SpeedDialChild(child: Icon(Icons.hotel))
         ],
-        child: const Icon(Icons.add,color: whitebg,),
+        child: const Icon(Icons.add,color: whitebg,), 
       ),
       bottomNavigationBar: BottomAppBar(
         surfaceTintColor:CupertinoColors.extraLightBackgroundGray,
