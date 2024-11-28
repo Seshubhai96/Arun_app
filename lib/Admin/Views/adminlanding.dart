@@ -1,3 +1,5 @@
+import 'package:arunmall/env/Animated/speed_dial.dart';
+import 'package:arunmall/env/Animated/speed_dial_child.dart';
 import 'package:arunmall/env/appexports.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -17,14 +19,14 @@ class _AdminlandingState extends State<Adminlanding> {
       backgroundColor: CupertinoColors.extraLightBackgroundGray,
       body: _pages[index],
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: SpeedDial(
         backgroundColor: CupertinoColors.activeBlue,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-        onPressed: () {},
-        child: const Icon(
-          Icons.add,
-          color: whitebg,
-        ),
+        children: [
+          SpeedDialChild(child: Icon(Icons.person_add)),
+          SpeedDialChild(child: Icon(Icons.post_add)),
+          SpeedDialChild(child: Icon(Icons.hotel))
+        ],
+        child: const Icon(Icons.add,color: whitebg,),
       ),
       bottomNavigationBar: BottomAppBar(
         surfaceTintColor:CupertinoColors.extraLightBackgroundGray,
