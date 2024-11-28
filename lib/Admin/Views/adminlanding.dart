@@ -22,9 +22,9 @@ class _AdminlandingState extends State<Adminlanding> {
       floatingActionButton: SpeedDial(
         backgroundColor: CupertinoColors.activeBlue,
         children: [
-          SpeedDialChild(child: Icon(Icons.person_add)),
-          SpeedDialChild(child: Icon(Icons.post_add)),
-          SpeedDialChild(child: Icon(Icons.hotel))
+          SpeedDialChild(child: const Icon(Icons.person_add)),
+          SpeedDialChild(child: const Icon(Icons.post_add)),
+          SpeedDialChild(child: const Icon(Icons.hotel))
         ],
         child: const Icon(Icons.add,color: whitebg,), 
       ),

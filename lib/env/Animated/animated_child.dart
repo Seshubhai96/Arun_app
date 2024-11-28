@@ -29,7 +29,7 @@ class AnimatedChild extends AnimatedWidget {
   final EdgeInsets childPadding;
 
   const AnimatedChild({
-    Key? key,
+    super.key,
     this.btnKey,
     required Animation<double> animation,
     this.index,
@@ -54,7 +54,7 @@ class AnimatedChild extends AnimatedWidget {
     this.heroTag,
     required this.childMargin,
     required this.childPadding,
-  }) : super(key: key, listenable: animation);
+  }) : super(listenable: animation);
 
   @override
   Widget build(BuildContext context) {
