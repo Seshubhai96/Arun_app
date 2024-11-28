@@ -13,6 +13,7 @@ export 'package:arunmall/api/apimethods.dart';
 export 'package:arunmall/env/appformatters.dart';
 // Common
 export 'package:arunmall/Common/Views/splash.dart';
+export 'package:arunmall/Common/Views/profile.dart';
 
 //Auth
 export 'package:arunmall/Auth/controller/logincontroller.dart';
@@ -20,6 +21,7 @@ export 'package:arunmall/Auth/Views/login.dart';
 
 // Admin
 export 'package:arunmall/Admin/Views/adminlanding.dart';
+export 'package:arunmall/Admin/Views/admindashboard.dart';
 //Hotel
 export 'package:arunmall/Hotel/Views/hotelanding.dart';
 //Shop

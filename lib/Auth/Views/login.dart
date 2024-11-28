@@ -13,13 +13,14 @@ class _LoginState extends State<Login> {
   TextEditingController passwordcontroller = TextEditingController();
   bool pwdvisible = false;
   final key = GlobalKey<FormState>();
+  final ctrl = Get.find<Logincontroller>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         alignment: Alignment.bottomCenter,
-        height: genratemediaquery(context).size.height,
-        width: genratemediaquery(context).size.width,
+        height: Get.height,
+        width: Get.width,
         decoration: const BoxDecoration(
             image: DecorationImage(
           image: AssetImage("assets/swagth.jpg"),
@@ -27,8 +28,8 @@ class _LoginState extends State<Login> {
         )),
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-          height: genratemediaquery(context).size.height / 2,
-          width: genratemediaquery(context).size.width,
+          height: Get.height / 2,
+          width: Get.width,
           decoration: const BoxDecoration(
             color: whitebg,
             borderRadius: BorderRadius.only(topRight: Radius.circular(50)),
@@ -75,23 +76,30 @@ class _LoginState extends State<Login> {
                               controller: passwordcontroller,
                               validator: Appvalidator.passwordvalidate,
                               ishidden: pwdvisible,
-                              sufix: IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      pwdvisible = !pwdvisible;
-                                    });
-                                  },
-                                  icon: Icon(pwdvisible
-                                      ? Icons.visibility_off
-                                      : Icons.visibility))))
+                              // sufix: IconButton(
+                              //     onPressed: () {
+                              //       setState(() {
+                              //         pwdvisible = !pwdvisible;
+                              //       });
+                              //     },
+                              //     icon: Icon(pwdvisible
+                              //         ? Icons.visibility_off
+                              //         : Icons.visibility))
+                                      ))
                     ]),
-                Padding(
+                Obx(()=>Padding(
                   padding: const EdgeInsets.only(left: 20),
-                  child: fillButton(context, load: false, title: "Login",
+                  child: fillButton(context, load: ctrl.isloginloading.value, title: "Login",
                       onTap: () {
-                    if (key.currentState!.validate()) {}
+                    if (key.currentState!.validate()) {
+                      final ctrl = Get.put(Logincontroller());
+                      ctrl.login(endpoint: "auth/login", body: {
+                        "email": emailcontroller.text,
+                        "password": passwordcontroller.text
+                      });
+                    }
                   }),
-                )
+                ))
               ],
             ),
           ),

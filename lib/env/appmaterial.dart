@@ -14,9 +14,9 @@ genratetheme(){
     colorScheme: ColorScheme.fromSeed(seedColor: primary)
   );
 }
-MediaQueryData genratemediaquery(context){
-  return MediaQuery.of(context);
-}
+// MediaQueryData genratemediaquery(context){
+//   return MediaQuery.of(context);
+// }
 genratreroutes(){
   return [GetPage(name: "/", page:()=>const Splash()),
   GetPage(name: "/login", page: ()=> const Login()),
