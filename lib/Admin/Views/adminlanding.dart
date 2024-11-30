@@ -14,6 +14,14 @@ class _AdminlandingState extends State<Adminlanding> {
   int index =0;
   final List<Widget> _pages = [const Admindashboard(),const Profile()];
   @override
+  void initState() {
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((val){
+      final ctrl = Get.put(Logincontroller());
+      ctrl.getbyid();
+    });
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: CupertinoColors.extraLightBackgroundGray,

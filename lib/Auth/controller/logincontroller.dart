@@ -15,7 +15,7 @@ try {
     final user = response["user"];
     //log(user.toString());
     box.write("type", user["type"]);
-    box.write("token",user["token"]);
+    box.write("token",response["token"]);
     navigateuser();
   }
   isloginloading.value= false;
@@ -24,6 +24,23 @@ try {
   isloginloading.value=false;
 }
   }
+
+RxBool usergetbyid = false.obs;
+var currentuser = {}.obs;
+getbyid()async{
+try {
+  usergetbyid.value=true;
+  final user = await Api().postmethod(endpoint: "auth/getbyid",);
+  if(user!=null){
+    log(user.toString());
+    currentuser.value = user;
+  }
+  usergetbyid.value = false;
+} catch (e) {
+  log("Error GetBYid $e");
+  usergetbyid.value=false;
+}
+}
   navigateuser(){
     final box = GetStorage();
     final role = box.read("type");

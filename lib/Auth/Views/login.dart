@@ -70,22 +70,25 @@ class _LoginState extends State<Login> {
                               prfix: const Icon(Icons.email),
                               validator: Appvalidator.emailvalidator)),
                       CupertinoFormRow(
-                          child: apptextfield(
-                              prfix: const Icon(Icons.lock),
-                              label: "Password",
-                              controller: passwordcontroller,
-                              validator: Appvalidator.passwordvalidate,
-                              ishidden: pwdvisible,
-                              // sufix: IconButton(
-                              //     onPressed: () {
-                              //       setState(() {
-                              //         pwdvisible = !pwdvisible;
-                              //       });
-                              //     },
-                              //     icon: Icon(pwdvisible
-                              //         ? Icons.visibility_off
-                              //         : Icons.visibility))
-                                      ))
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: apptextfield(
+                                prfix: const Icon(Icons.lock),
+                                label: "Password",
+                                controller: passwordcontroller,
+                                validator: Appvalidator.passwordvalidate,
+                                ishidden: pwdvisible,
+                                sufix: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        pwdvisible = !pwdvisible;
+                                      });
+                                    },
+                                    icon: Icon(pwdvisible
+                                        ? Icons.visibility_off
+                                        : Icons.visibility))
+                                        ),
+                          ))
                     ]),
                 Obx(()=>Padding(
                   padding: const EdgeInsets.only(left: 20),

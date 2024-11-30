@@ -1,6 +1,8 @@
+import 'dart:developer';
+
 import 'package:arunmall/env/appexports.dart';
 
-const baseurl = "http://192.168.29.208:8081/api/v1/";
+const baseurl = "http://192.168.1.10:8081/api/v1/";
 //"http://localhost:8081/api/v1/";
 
 
@@ -13,10 +15,11 @@ const headers = {
 domainheaders(){
   final bx = GetStorage();
   final token = bx.read("token");
+  //log(token.toString());
   return {
     'Content-Type': 'application/json; charset=utf-8',
     'Accept': 'application/json, text/plain, */*',
     "Access-Control-Allow-Origin": "*",
-    'Authorization': 'Bearer $token',
+    'Authorization': '$token',
   };
 }
