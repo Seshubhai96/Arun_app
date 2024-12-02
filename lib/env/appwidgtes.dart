@@ -1,5 +1,7 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:io';
+
 import 'package:arunmall/env/appexports.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
@@ -110,9 +112,13 @@ Widget fillButton(context,
 Widget apptextfield(
     {enabled = true,
     required TextEditingController controller,
+    keyboardtype,
     validator,
     onchange,
+    formatters,
+    textaction,
     label,
+    maxlenth,
     hint,
     prfix,
     sufix,
@@ -120,12 +126,14 @@ Widget apptextfield(
   return Appscalemedia(
     child: TextFormField(
       obscureText: ishidden,
+      inputFormatters: formatters ?? [],
+      maxLength: maxlenth ?? TextField.noMaxLength,
       autofocus: false,
       controller: controller,
       decoration: inputDecoration(
           labelText: label, hintText: hint, prefix: prfix, suffix: sufix),
-      textInputAction: TextInputAction.next,
-      keyboardType: TextInputType.emailAddress,
+      textInputAction: textaction ?? TextInputAction.next,
+      keyboardType: keyboardtype ?? TextInputType.emailAddress,
       textCapitalization: TextCapitalization.none,
       validator: validator,
       onChanged: onchange,
@@ -212,5 +220,182 @@ Widget networkImages({
               },
             ),
     ),
+  );
+}
+
+class Themeappbar extends StatelessWidget implements PreferredSizeWidget {
+  final String title;
+  final List<Widget>? actions;
+  final Color bgcolor;
+  final isback;
+  final Widget? leading;
+  const Themeappbar(
+      {super.key,
+      this.title = "",
+      this.actions,
+      this.bgcolor = whitebg,
+      this.isback = false,
+      this.leading});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      centerTitle: true,
+      actions: actions,
+      backgroundColor: bgcolor,
+      automaticallyImplyLeading: false,
+      leading: Visibility(
+          visible: isback,
+          child: leading ??
+              IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(Icons.arrow_back_ios))),
+      title: Apptextwidget(
+        title,
+        style: Theme.of(context)
+            .textTheme
+            .titleLarge!
+            .copyWith(fontWeight: FontWeight.w500, color: black),
+      ),
+    );
+  }
+
+  @override
+  // TODO: implement preferredSize
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+
+appdailog(context,
+    {alert, content, actionsyes, ationtitleno, ationtitleyes, actionno}) {
+  if (Platform.isIOS) {
+    return CupertinoAlertDialog(title: alert, content: content, actions: [
+      Visibility(
+        visible: actionno != null,
+        child: CupertinoButton(
+            onPressed: actionno ??
+                () {
+                  Navigator.pop(context);
+                },
+            child: Apptextwidget(
+              ationtitleno ?? "Cancel",
+              // style: TxtStls.stl14,
+            )),
+      ),
+      Visibility(
+        visible: actionsyes != null,
+        child: CupertinoButton(
+            onPressed: actionsyes ?? () {},
+            child: Apptextwidget(
+              ationtitleyes ?? "Ok",
+              //  style: TxtStls.stl14,
+            )),
+      )
+    ]);
+  } else {
+    return AlertDialog(
+      surfaceTintColor: grey,
+      backgroundColor: whitebg,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      elevation: 10,
+      titlePadding: const EdgeInsets.all(15),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+      actionsPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+      title: alert,
+      content: content,
+      actions: [
+        Visibility(
+          visible: actionno != null,
+          child: TextButton(
+              onPressed: actionno ??
+                  () {
+                    Navigator.pop(context);
+                  },
+              child: Apptextwidget(
+                ationtitleno ?? "Cancel",
+                //style: TxtStls.stl14,
+              )),
+        ),
+        Visibility(
+          visible: actionsyes != null,
+          child: TextButton(
+              onPressed: actionsyes ?? () {},
+              child: Apptextwidget(
+                ationtitleyes ?? "Ok",
+                //style: TxtStls.stl14,
+              )),
+        )
+      ],
+    );
+  }
+}
+
+showAppDialog({context, alert}) {
+  showAdaptiveDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (BuildContext context) {
+      return alert ??
+          appdailog(context, alert: const Apptextwidget("Alert"), actionno: () {
+            Navigator.pop(context);
+          }, content: const Apptextwidget("This is custom dailog"));
+    },
+  );
+}
+
+Widget toggle(
+  context, {
+  titl1,
+  title2,
+  titlw1,
+  titlew2,
+  isSelected,
+  tap,
+  col,
+}) {
+  // Size size = MediaQuery.of(context).size;
+  return SizedBox(
+    height: 35,
+    child: ToggleButtons(
+        onPressed: tap,
+        color: primary,
+        fillColor: primary,
+        splashColor: primary,
+        highlightColor: primary,
+        renderBorder: true,
+        borderWidth: 1,
+        borderRadius: BorderRadius.circular(30),
+        borderColor: grey,
+        selectedBorderColor: primary,
+        disabledBorderColor: col ?? grey,
+        disabledColor: col ?? grey,
+        isSelected: isSelected,
+        children: [
+          titlw1 ??
+              AnimatedContainer(
+                curve: Curves.easeInOut,
+                alignment: Alignment.center,
+                width: 70,
+                duration: const Duration(microseconds: 300),
+                child: Text(titl1,
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelMedium!
+                        .copyWith(color: isSelected[0] ? whitebg : black)),
+              ),
+          titlew2 ??
+              AnimatedContainer(
+                curve: Curves.slowMiddle,
+                alignment: Alignment.center,
+                width: 70,
+                duration: const Duration(microseconds: 300),
+                child: Text(title2,
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelMedium!
+                        .copyWith(color: isSelected[1] ? whitebg : black)),
+              ),
+        ]),
   );
 }

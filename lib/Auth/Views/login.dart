@@ -15,29 +15,29 @@ class _LoginState extends State<Login> {
   final key = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Consumer<Logincontroller>(
-      builder: (context,ctrl,child) {
-        return Scaffold(
-          body: Container(
-            alignment: Alignment.bottomCenter,
-            height: genratemediaquery(context).size.height,
+    return Consumer<Logincontroller>(builder: (context, ctrl, child) {
+      return Scaffold(
+        body: Container(
+          alignment: Alignment.bottomCenter,
+          height: genratemediaquery(context).size.height,
+          width: genratemediaquery(context).size.width,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+            image: AssetImage("assets/swagth.jpg"),
+            fit: BoxFit.cover,
+          )),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+            height: genratemediaquery(context).size.height / 2,
             width: genratemediaquery(context).size.width,
             decoration: const BoxDecoration(
-                image: DecorationImage(
-              image: AssetImage("assets/swagth.jpg"),
-              fit: BoxFit.cover,
-            )),
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-              height: genratemediaquery(context).size.height/ 2,
-              width: genratemediaquery(context).size.width,
-              decoration: const BoxDecoration(
-                color: whitebg,
-                borderRadius: BorderRadius.only(topRight: Radius.circular(50)),
-              ),
-              child: Form(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                key: key,
+              color: whitebg,
+              borderRadius: BorderRadius.only(topRight: Radius.circular(50)),
+            ),
+            child: Form(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              key: key,
+              child: SingleChildScrollView(
                 child: Column(
                   children: [
                     Apptextwidget(
@@ -72,31 +72,30 @@ class _LoginState extends State<Login> {
                                   validator: Appvalidator.emailvalidator)),
                           CupertinoFormRow(
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: apptextfield(
-                                    prfix: const Icon(Icons.lock),
-                                    label: "Password",
-                                    controller: passwordcontroller,
-                                    validator: Appvalidator.passwordvalidate,
-                                    ishidden: pwdvisible,
-                                    sufix: IconButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            pwdvisible = !pwdvisible;
-                                          });
-                                        },
-                                        icon: Icon(pwdvisible
-                                            ? Icons.visibility_off
-                                            : Icons.visibility))
-                                            ),
-                              ))
+                            padding: const EdgeInsets.all(8.0),
+                            child: apptextfield(
+                                prfix: const Icon(Icons.lock),
+                                label: "Password",
+                                controller: passwordcontroller,
+                                validator: Appvalidator.passwordvalidate,
+                                ishidden: pwdvisible,
+                                sufix: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        pwdvisible = !pwdvisible;
+                                      });
+                                    },
+                                    icon: Icon(pwdvisible
+                                        ? Icons.visibility_off
+                                        : Icons.visibility))),
+                          ))
                         ]),
                     Padding(
                       padding: const EdgeInsets.only(left: 20),
-                      child: fillButton(context, load: ctrl.isloginloading, title: "Login",
-                          onTap: () {
+                      child: fillButton(context,
+                          load: ctrl.isloginloading, title: "Login", onTap: () {
                         if (key.currentState!.validate()) {
-                          ctrl.login(context,endpoint: "auth/login", body: {
+                          ctrl.login(context, endpoint: "auth/login", body: {
                             "email": emailcontroller.text,
                             "password": passwordcontroller.text
                           });
@@ -108,9 +107,9 @@ class _LoginState extends State<Login> {
               ),
             ),
           ),
-        );
-      }
-    );
+        ),
+      );
+    });
   }
 }
 

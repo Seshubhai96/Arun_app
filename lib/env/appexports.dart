@@ -15,6 +15,7 @@ export 'package:arunmall/env/appformatters.dart';
 export 'package:arunmall/Common/Views/splash.dart';
 export 'package:arunmall/Common/Views/profile.dart';
 export 'package:arunmall/Common/Views/loader.dart';
+export 'package:arunmall/Common/Views/eptyWidget.dart';
 
 //Auth
 export 'package:arunmall/Auth/controller/logincontroller.dart';
@@ -23,7 +24,14 @@ export 'package:arunmall/Auth/Views/login.dart';
 // Admin
 export 'package:arunmall/Admin/Views/adminlanding.dart';
 export 'package:arunmall/Admin/Views/admindashboard.dart';
+
+export 'package:arunmall/Admin/Controllers/adminLandingcontroller.dart';
+
 //Hotel
 export 'package:arunmall/Hotel/Views/hotelanding.dart';
+export 'package:arunmall/Hotel/Views/roomsView.dart';
+
+export 'package:arunmall/Hotel/Models/roomModel.dart';
+
 //Shop
 export 'package:arunmall/Shop/Views/shoplanding.dart';

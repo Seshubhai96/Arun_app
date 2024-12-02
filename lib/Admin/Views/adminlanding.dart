@@ -11,15 +11,18 @@ class Adminlanding extends StatefulWidget {
 }
 
 class _AdminlandingState extends State<Adminlanding> {
-  int index =0;
-  final List<Widget> _pages = [const Admindashboard(),const Profile()];
+  int index = 0;
+  final List<Widget> _pages = [const Admindashboard(), const Profile()];
   @override
   void initState() {
-    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((val){
-      Provider.of<Logincontroller>(context,listen: false).getbyid();
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((val) {
+      Provider.of<Logincontroller>(context, listen: false).getbyid();
+      Provider.of<Adminlandingcontroller>(context, listen: false)
+          .callresources();
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,28 +34,41 @@ class _AdminlandingState extends State<Adminlanding> {
         children: [
           SpeedDialChild(child: const Icon(Icons.person_add)),
           SpeedDialChild(child: const Icon(Icons.post_add)),
-          SpeedDialChild(child: const Icon(Icons.hotel))
+          SpeedDialChild(
+              child: const Icon(Icons.hotel),
+              onTap: () {
+                NavigationSlide(context, const Roomsview());
+              })
         ],
-        child: const Icon(Icons.add,color: whitebg,), 
+        child: const Icon(
+          Icons.add,
+          color: whitebg,
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
-        surfaceTintColor:CupertinoColors.extraLightBackgroundGray,
+        surfaceTintColor: CupertinoColors.extraLightBackgroundGray,
         color: CupertinoColors.extraLightBackgroundGray,
         clipBehavior: Clip.antiAlias,
         height: 100,
         shape: const CircularNotchedRectangle(),
         notchMargin: 12.0,
-        child: BottomNavigationBar(onTap: (val){
-          setState(() {
-            index=val;
-          });
-        },currentIndex: index,elevation: 0,backgroundColor: CupertinoColors.extraLightBackgroundGray,items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home),label: "Home"),
-          BottomNavigationBarItem(
-              icon: Icon(
-            Icons.person,
-          ),label: "Profile")
-        ]),
+        child: BottomNavigationBar(
+            onTap: (val) {
+              setState(() {
+                index = val;
+              });
+            },
+            currentIndex: index,
+            elevation: 0,
+            backgroundColor: CupertinoColors.extraLightBackgroundGray,
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+              BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.person,
+                  ),
+                  label: "Profile")
+            ]),
       ),
     );
   }

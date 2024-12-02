@@ -1,10 +1,11 @@
 import 'package:arunmall/env/appexports.dart';
 
-void main() async{
+void main() async {
   await GetStorage.init();
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_)=>Logincontroller())
-  ],child: const MyApp()));
+    ChangeNotifierProvider(create: (_) => Logincontroller()),
+    ChangeNotifierProvider(create: (_) => Adminlandingcontroller())
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -14,4 +15,3 @@ class MyApp extends StatelessWidget {
     return mymaterialapp();
   }
 }
-
