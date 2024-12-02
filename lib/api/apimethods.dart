@@ -22,10 +22,18 @@ class Api extends GetConnect {
   Future<dynamic>? postmethod({body, endpoint}) async {
     try {
       final url = "$baseurl$endpoint";
+      //log(url);
       final response = await post(url, body, headers: domainheaders());
-      final extractres = response.body;
-      return extractres?["data"];
+      //log(domainheaders().toString());
+      if (response.isOk) {
+        final extractres = response.body;
+        return extractres?["data"];
+      }
+      log(response.body.toString());
+      return null;
     } catch (e) {
+      final url = "$baseurl$endpoint";
+      log("PostApi error $url $e");
       return null;
     }
   }

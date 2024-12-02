@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:arunmall/env/appexports.dart';
 
 class Profile extends StatefulWidget {
@@ -8,8 +10,21 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  final ctrl = Get.find<Logincontroller>();
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Obx(()=> ctrl.usergetbyid.value?const Loader():SafeArea(
+      child: SizedBox(height: Get.height,width: Get.width,child: Column(
+        children: [
+          Card(
+            child: Column(
+              children: [
+                Apptextwidget("${ctrl.currentuser.value}")
+              ],
+            ),
+          )
+        ],
+      ),),
+    ));
   }
 }

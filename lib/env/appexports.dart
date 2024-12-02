@@ -14,6 +14,7 @@ export 'package:arunmall/env/appformatters.dart';
 // Common
 export 'package:arunmall/Common/Views/splash.dart';
 export 'package:arunmall/Common/Views/profile.dart';
+export 'package:arunmall/Common/Views/loader.dart';
 
 //Auth
 export 'package:arunmall/Auth/controller/logincontroller.dart';
