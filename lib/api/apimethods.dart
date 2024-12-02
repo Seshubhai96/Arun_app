@@ -1,15 +1,17 @@
 
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:arunmall/env/appexports.dart';
+import 'package:http/http.dart' as http;
 
-class Api extends GetConnect{
+class Api {
   Future<dynamic>? loginmethod({body,endpoint})async{
     try {
-      final url = "$baseurl$endpoint";
-      final response =  await post(url,body,headers: headers);
-      if(response.isOk){
-       final extractres = response.body;
+      final url = Uri.parse("$baseurl$endpoint");
+      final response =  await http.post(url,body: jsonEncode(body),headers: headers);
+      if(response.statusCode==200){
+       final extractres = json.decode(response.body);
       return extractres?["data"];
       }
        return null;
@@ -20,12 +22,12 @@ class Api extends GetConnect{
   }
   Future<dynamic>? postmethod({body,endpoint})async{
     try {
-      final url = "$baseurl$endpoint";
+      final url = Uri.parse("$baseurl$endpoint");
       //log(url);
-      final response =  await post(url, body,headers: domainheaders());
-      //log(domainheaders().toString());
-      if(response.isOk){
-       final extractres = response.body;
+      final response =  await http.post(url,body: jsonEncode(body??{}),headers: domainheaders());
+      log(domainheaders().toString());
+      if(response.statusCode==200){
+       final extractres = json.decode(response.body);
       return extractres?["data"];
       }
       log(response.body.toString());

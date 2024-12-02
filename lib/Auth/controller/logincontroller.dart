@@ -2,11 +2,12 @@ import 'dart:developer';
 
 import 'package:arunmall/env/appexports.dart';
 
-class Logincontroller extends GetxController{
-  RxBool isloginloading = false.obs;
-  login({body,endpoint})async{
+class Logincontroller extends ChangeNotifier{
+  var isloginloading = false;
+  login(context,{body,endpoint})async{
 try {
-  isloginloading.value=true;
+  isloginloading=true;
+  notifyListeners();
   final box = GetStorage();
   final response = await Api().loginmethod(body: body,endpoint: endpoint);
   //log("Login Response $response");
@@ -16,43 +17,49 @@ try {
     //log(user.toString());
     box.write("type", user["type"]);
     box.write("token",response["token"]);
-    navigateuser();
+    navigateuser(context);
   }
-  isloginloading.value= false;
+  isloginloading= false;
+  notifyListeners();
 } catch (e) {
   log("Login Error ${e.toString()}");
-  isloginloading.value=false;
+  isloginloading=false;
+  notifyListeners();
 }
   }
 
-RxBool usergetbyid = false.obs;
-var currentuser = {}.obs;
+var usergetbyid = false;
+var currentuser = {};
 getbyid()async{
 try {
-  usergetbyid.value=true;
+  usergetbyid=true;
+  notifyListeners();
   final user = await Api().postmethod(endpoint: "auth/getbyid",);
   if(user!=null){
     log(user.toString());
-    currentuser.value = user;
+    currentuser= user;
+    notifyListeners();
   }
-  usergetbyid.value = false;
+  usergetbyid = false;
+  notifyListeners();
 } catch (e) {
   log("Error GetBYid $e");
-  usergetbyid.value=false;
+  usergetbyid=false;
+  notifyListeners();
 }
 }
-  navigateuser(){
+  navigateuser(context){
     final box = GetStorage();
     final role = box.read("type");
     log(role.toString());
     if(role=="Owner"){
-      navigatepage(page: "/owner",navigationtype: Get.offNamed);
+      NavigationSlideAndRemoveUntil(context,const Adminlanding());
     }else if(role=="Shop"){
-       navigatepage(page: "/shop",navigationtype: Get.offNamed);
+      NavigationSlideAndRemoveUntil(context,const Shoplanding());
     }else if(role=="Hotel"){
-       navigatepage(page: "/hotel",navigationtype: Get.offNamed);
+      NavigationSlideAndRemoveUntil(context,const Hotelanding());
     }else{
-      navigatepage(page: "/login",navigationtype: Get.offNamed);
+       NavigationSlideAndRemoveUntil(context,const Login());
     }
   }
 }

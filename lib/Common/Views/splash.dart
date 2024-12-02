@@ -16,8 +16,8 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((val) {
-     final ctrl = Get.put(Logincontroller());
-     ctrl.navigateuser();
+     //final ctrl = Get.put(Logincontroller());
+     Provider.of<Logincontroller>(context,listen: false).navigateuser(context);
     });
     super.initState();
   }

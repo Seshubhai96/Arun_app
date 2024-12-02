@@ -17,8 +17,8 @@ class _AdmindashboardState extends State<Admindashboard> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: Get.height,
-      width: Get.width,
+      height: genratemediaquery(context).size.height,
+      width: genratemediaquery(context).size.width,
       child: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
         children: [
