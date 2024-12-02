@@ -13,7 +13,7 @@ class _LoginState extends State<Login> {
   TextEditingController passwordcontroller = TextEditingController();
   bool pwdvisible = false;
   final key = GlobalKey<FormState>();
-  final ctrl = Get.find<Logincontroller>();
+  final ctrl = Get.put(Logincontroller());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,35 +71,36 @@ class _LoginState extends State<Login> {
                               validator: Appvalidator.emailvalidator)),
                       CupertinoFormRow(
                           child: apptextfield(
-                              prfix: const Icon(Icons.lock),
-                              label: "Password",
-                              controller: passwordcontroller,
-                              validator: Appvalidator.passwordvalidate,
-                              ishidden: pwdvisible,
-                              // sufix: IconButton(
-                              //     onPressed: () {
-                              //       setState(() {
-                              //         pwdvisible = !pwdvisible;
-                              //       });
-                              //     },
-                              //     icon: Icon(pwdvisible
-                              //         ? Icons.visibility_off
-                              //         : Icons.visibility))
-                                      ))
+                        prfix: const Icon(Icons.lock),
+                        label: "Password",
+                        controller: passwordcontroller,
+                        validator: Appvalidator.passwordvalidate,
+                        ishidden: pwdvisible,
+                        // sufix: IconButton(
+                        //     onPressed: () {
+                        //       setState(() {
+                        //         pwdvisible = !pwdvisible;
+                        //       });
+                        //     },
+                        //     icon: Icon(pwdvisible
+                        //         ? Icons.visibility_off
+                        //         : Icons.visibility))
+                      ))
                     ]),
-                Obx(()=>Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: fillButton(context, load: ctrl.isloginloading.value, title: "Login",
-                      onTap: () {
-                    if (key.currentState!.validate()) {
-                      final ctrl = Get.put(Logincontroller());
-                      ctrl.login(endpoint: "auth/login", body: {
-                        "email": emailcontroller.text,
-                        "password": passwordcontroller.text
-                      });
-                    }
-                  }),
-                ))
+                Obx(() => Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: fillButton(context,
+                          load: ctrl.isloginloading.value,
+                          title: "Login", onTap: () {
+                        if (key.currentState!.validate()) {
+                          final ctrl = Get.put(Logincontroller());
+                          ctrl.login(endpoint: "auth/login", body: {
+                            "email": emailcontroller.text,
+                            "password": passwordcontroller.text
+                          });
+                        }
+                      }),
+                    ))
               ],
             ),
           ),
