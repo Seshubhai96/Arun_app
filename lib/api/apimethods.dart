@@ -14,13 +14,14 @@ class Api {
        final extractres = json.decode(response.body);
       return extractres?["data"];
       }
-       return null;
+      return null;
     } catch (e) {
       log("Api Error ${e.toString()}");
       return null;
     }
   }
-  Future<dynamic>? postmethod({body,endpoint})async{
+
+  Future<dynamic>? postmethod({body, endpoint}) async {
     try {
       final url = Uri.parse("$baseurl$endpoint");
       //log(url);
@@ -31,7 +32,7 @@ class Api {
       return extractres?["data"];
       }
       log(response.body.toString());
-       return null;
+      return null;
     } catch (e) {
       final url = "$baseurl$endpoint";
       log("PostApi error $url $e");
