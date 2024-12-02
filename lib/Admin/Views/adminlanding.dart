@@ -18,7 +18,7 @@ class _AdminlandingState extends State<Adminlanding> {
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((val) {
       Provider.of<Logincontroller>(context, listen: false).getbyid();
       Provider.of<Adminlandingcontroller>(context, listen: false)
-          .callresources();
+          .callresources(context);
     });
     super.initState();
   }

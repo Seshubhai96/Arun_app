@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:arunmall/env/appexports.dart';
 
 class Roomsview extends StatefulWidget {
@@ -12,8 +14,7 @@ TextEditingController roomFormCtrl = TextEditingController();
 class _RoomsviewState extends State<Roomsview> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<Adminlandingcontroller>(
-        builder: (context, roomctrl, child) {
+    return Consumer<Roomcontroller>(builder: (context, roomctrl, child) {
       return Scaffold(
         appBar: const Themeappbar(
           isback: true,
@@ -33,7 +34,7 @@ class _RoomsviewState extends State<Roomsview> {
                     : ListView.builder(
                         itemCount: roomctrl.roomList.length,
                         physics: const AlwaysScrollableScrollPhysics(),
-                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
                         itemBuilder: (_, i) {
                           final roomdata = roomctrl.roomList[i];
                           return Card(
@@ -59,32 +60,65 @@ class _RoomsviewState extends State<Roomsview> {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           onPressed: () {
+            // showAppDialog(context: context);
             showAppDialog(
                 context: context,
                 alert: appdailog(
                   context,
+                  //ationtitleyes: "Add",
+                  actionsyes: () {
+                    var payload = {
+                      'roomnumber': roomctrl.rnCtrl.text,
+                      'type': roomctrl.toggleitems[0]
+                          ? "Ac"
+                          : roomctrl.toggleitems[1]
+                              ? "Nonac"
+                              : null
+                    };
+                    log(payload.toString());
+                  },
                   alert: Apptextwidget(
                     "Add New Room",
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      apptextfield(
-                          keyboardtype: const TextInputType.numberWithOptions(
-                              decimal: true, signed: true),
-                          controller: roomFormCtrl,
-                          maxlenth: 3,
-                          formatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                          ]),
-                      const Appsized(height: 10),
-                      toggle(context,
-                          titl1: "Ac",
-                          title2: "Non Ac",
-                          isSelected: [false, false])
-                    ],
-                  ),
+                  content: Consumer<Roomcontroller>(
+                      builder: (context, roomCntrl, child) {
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        apptextfield(
+                            label: "Room Number",
+                            hint: "Enter Room Number",
+                            keyboardtype: const TextInputType.numberWithOptions(
+                                decimal: true, signed: true),
+                            controller: roomctrl.rnCtrl,
+                            maxlenth: 3,
+                            formatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                            ]),
+                        const Appsized(height: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Apptextwidget(
+                              "RoomType",
+                              style: Theme.of(context).textTheme.labelMedium,
+                            ),
+                            const Appsized(
+                              height: 10,
+                            ),
+                            toggle(context, titl1: "Ac", title2: "Non Ac",
+                                tap: (val) {
+                              roomCntrl.toggleData(val);
+                              // roomctrl.changetrigger(val);
+                            }, isSelected: roomCntrl.toggleitems),
+                          ],
+                        )
+                      ],
+                    );
+                  }),
                   actionno: () {
                     Navigator.pop(context);
                   },

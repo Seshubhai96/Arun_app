@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
-import 'dart:io';
-
+import 'dart:developer';
+import 'package:flutter/foundation.dart';
 import 'package:arunmall/env/appexports.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
@@ -145,7 +145,7 @@ InputDecoration inputDecoration(
     {labelText, hintText, col, isbalck = false, fillcor, prefix, suffix}) {
   return InputDecoration(
     contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
-    labelText: labelText,
+    labelText: labelText ?? "",
     //labelStyle: isbalck ?  : TxtStls.stl15,
     hintText: hintText,
     // hintStyle: TxtStls.hintStl,
@@ -269,65 +269,70 @@ class Themeappbar extends StatelessWidget implements PreferredSizeWidget {
 
 appdailog(context,
     {alert, content, actionsyes, ationtitleno, ationtitleyes, actionno}) {
-  if (Platform.isIOS) {
-    return CupertinoAlertDialog(title: alert, content: content, actions: [
-      Visibility(
-        visible: actionno != null,
-        child: CupertinoButton(
-            onPressed: actionno ??
-                () {
-                  Navigator.pop(context);
-                },
-            child: Apptextwidget(
-              ationtitleno ?? "Cancel",
-              // style: TxtStls.stl14,
-            )),
-      ),
-      Visibility(
-        visible: actionsyes != null,
-        child: CupertinoButton(
-            onPressed: actionsyes ?? () {},
-            child: Apptextwidget(
-              ationtitleyes ?? "Ok",
-              //  style: TxtStls.stl14,
-            )),
-      )
-    ]);
-  } else {
-    return AlertDialog(
-      surfaceTintColor: grey,
-      backgroundColor: whitebg,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      elevation: 10,
-      titlePadding: const EdgeInsets.all(15),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-      actionsPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-      title: alert,
-      content: content,
-      actions: [
+  try {
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
+      return CupertinoAlertDialog(title: alert, content: content, actions: [
         Visibility(
           visible: actionno != null,
-          child: TextButton(
+          child: CupertinoButton(
               onPressed: actionno ??
                   () {
                     Navigator.pop(context);
                   },
               child: Apptextwidget(
                 ationtitleno ?? "Cancel",
-                //style: TxtStls.stl14,
+                // style: TxtStls.stl14,
               )),
         ),
         Visibility(
           visible: actionsyes != null,
-          child: TextButton(
+          child: CupertinoButton(
               onPressed: actionsyes ?? () {},
               child: Apptextwidget(
                 ationtitleyes ?? "Ok",
-                //style: TxtStls.stl14,
+                //  style: TxtStls.stl14,
               )),
         )
-      ],
-    );
+      ]);
+    } else {
+      return AlertDialog(
+        surfaceTintColor: grey,
+        backgroundColor: whitebg,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        elevation: 10,
+        titlePadding: const EdgeInsets.all(15),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        actionsPadding:
+            const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+        title: alert,
+        content: content,
+        actions: [
+          Visibility(
+            visible: actionno != null,
+            child: TextButton(
+                onPressed: actionno ??
+                    () {
+                      Navigator.pop(context);
+                    },
+                child: Apptextwidget(
+                  ationtitleno ?? "Cancel",
+                  //style: TxtStls.stl14,
+                )),
+          ),
+          Visibility(
+            visible: actionsyes != null,
+            child: TextButton(
+                onPressed: actionsyes ?? () {},
+                child: Apptextwidget(
+                  ationtitleyes ?? "Ok",
+                  //style: TxtStls.stl14,
+                )),
+          )
+        ],
+      );
+    }
+  } catch (e) {
+    log("Platform Exception $e");
   }
 }
 
@@ -339,7 +344,9 @@ showAppDialog({context, alert}) {
       return alert ??
           appdailog(context, alert: const Apptextwidget("Alert"), actionno: () {
             Navigator.pop(context);
-          }, content: const Apptextwidget("This is custom dailog"));
+          },
+              actionsyes: () {},
+              content: const Apptextwidget("This is custom dailog"));
     },
   );
 }

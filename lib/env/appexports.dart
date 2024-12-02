@@ -31,6 +31,8 @@ export 'package:arunmall/Admin/Controllers/adminLandingcontroller.dart';
 export 'package:arunmall/Hotel/Views/hotelanding.dart';
 export 'package:arunmall/Hotel/Views/roomsView.dart';
 
+export 'package:arunmall/Hotel/controllers/roomcontroller.dart';
+
 export 'package:arunmall/Hotel/Models/roomModel.dart';
 
 //Shop
