@@ -1,8 +1,8 @@
-import 'dart:developer';
+//import 'dart:developer';
 
 import 'package:arunmall/env/appexports.dart';
 
-const baseurl = "http://192.168.1.10:8081/api/v1/";
+const baseurl = "http://192.168.1.61:8081/api/v1/";
 //"http://localhost:8081/api/v1/";
 
 
