@@ -6,9 +6,6 @@ class Roomsview extends StatefulWidget {
   @override
   State<Roomsview> createState() => _RoomsviewState();
 }
-
-TextEditingController roomFormCtrl = TextEditingController();
-
 class _RoomsviewState extends State<Roomsview> {
   @override
   Widget build(BuildContext context) {
