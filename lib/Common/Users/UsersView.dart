@@ -39,40 +39,48 @@ class _MyWidgetState extends State<Usersview> {
                               color: grey,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
+                                child: Row(
                                   children: [
-                                    Row(
+                                    networkImages(
+                                        url: userdata.image ??
+                                            "assets/swagth.jpg",
+                                        size: 50.0),
+                                    const Appsized(width: 10),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        networkImages(
-                                            url: userdata.image ??
-                                                "assets/swagth.jpg",
-                                            size: 50.0),
-                                        const Appsized(width: 10),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                        Row(
                                           children: [
-                                            Row(
-                                              children: [
-                                                Apptextwidget(
-                                                  userdata.fullname?.text ?? "",
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyLarge!
-                                                      .copyWith(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          color: black),
-                                                ),
-                                                IconButton(
-                                                    onPressed: () {},
-                                                    icon: const Icon(
-                                                        Icons.edit_note))
-                                              ],
-                                            ),
                                             Apptextwidget(
-                                              userdata.email?.text ?? "",
+                                              userdata.fullname?.text ?? "",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge!
+                                                  .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: black),
+                                            ),
+                                            IconButton(
+                                                onPressed: () {},
+                                                icon:
+                                                    const Icon(Icons.edit_note))
+                                          ],
+                                        ),
+                                        Apptextwidget(
+                                          userdata.email?.text ?? "",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w300,
+                                                  color: black),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Apptextwidget(
+                                              userdata.role.toString(),
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodyMedium!
@@ -81,24 +89,10 @@ class _MyWidgetState extends State<Usersview> {
                                                           FontWeight.w300,
                                                       color: black),
                                             ),
-                                            Row(
-                                              children: [
-                                                Apptextwidget(
-                                                  userdata.role.toString(),
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyMedium!
-                                                      .copyWith(
-                                                          fontWeight:
-                                                              FontWeight.w300,
-                                                          color: black),
-                                                ),
-                                              ],
-                                            ),
                                           ],
-                                        )
+                                        ),
                                       ],
-                                    ),
+                                    )
                                   ],
                                 ),
                               ),
