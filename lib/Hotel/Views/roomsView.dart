@@ -6,6 +6,7 @@ class Roomsview extends StatefulWidget {
   @override
   State<Roomsview> createState() => _RoomsviewState();
 }
+
 class _RoomsviewState extends State<Roomsview> {
   @override
   Widget build(BuildContext context) {
@@ -94,7 +95,7 @@ class _RoomsviewState extends State<Roomsview> {
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             content: roomctrl.iscreateorupdateloading
-                ? const Loader()
+                ? const Appsized(height: 200, child: Loader())
                 : Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,

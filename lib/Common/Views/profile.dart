@@ -13,7 +13,8 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<Logincontroller>(builder: (_, ctrl, child) {
+    return Consumer2<Logincontroller, Filepickercontroller>(
+        builder: (_, ctrl, filectrl, child) {
       return ctrl.isloginloading
           ? const Loader()
           : SafeArea(
@@ -29,7 +30,18 @@ class _ProfileState extends State<Profile> {
                     Center(
                         child: Column(
                       children: [
-                        networkImages(url: "assets/swagth.jpg", size: 100.0),
+                        ctrl.userupdatebyid ||
+                                filectrl.packetloading ||
+                                ctrl.usergetbyid
+                            ? const Loader()
+                            : GestureDetector(
+                                onTap: () {
+                                  filectrl.sudhaimage(context);
+                                },
+                                child: networkImages(
+                                    url: ctrl.currentuser["image"] ??
+                                        "assets/swagth.jpg",
+                                    size: 100.0)),
                         Apptextwidget(
                           "${ctrl.currentuser["fullname"] ?? ""}",
                           style: Theme.of(context)
