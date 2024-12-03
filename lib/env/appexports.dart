@@ -2,7 +2,9 @@ export 'package:flutter/material.dart';
 export 'package:provider/provider.dart';
 export 'package:get_storage/get_storage.dart';
 export 'package:flutter/services.dart';
-//env
+export 'package:file_picker/file_picker.dart';
+export 'package:image_cropper/image_cropper.dart';
+// env
 export 'package:arunmall/env/appmaterial.dart';
 export 'package:arunmall/env/appcolors.dart';
 export 'package:arunmall/env/appconstants.dart';
@@ -19,6 +21,7 @@ export 'package:arunmall/Common/Views/eptyWidget.dart';
 export 'package:arunmall/Common/Users/UsersView.dart';
 export 'package:arunmall/Common/Users/Controllers/userscontroller.dart';
 export 'package:arunmall/Common/Users/Models/UsersModel.dart';
+export 'package:arunmall/Common/Users/Controllers/filepickerController.dart';
 
 //Auth
 export 'package:arunmall/Auth/controller/logincontroller.dart';

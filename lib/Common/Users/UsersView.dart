@@ -28,6 +28,7 @@ class _MyWidgetState extends State<Usersview> {
                   : userctrl.userslist.isEmpty
                       ? const Eptywidget()
                       : ListView.builder(
+                          shrinkWrap: true,
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           itemCount: userctrl.userslist.length,
                           physics: const AlwaysScrollableScrollPhysics(),
@@ -62,7 +63,7 @@ class _MyWidgetState extends State<Usersview> {
                                   Apptextwidget(userdata.role.toString(),
                                       style: Theme.of(context)
                                           .textTheme
-                                          .labelMedium!
+                                          .headlineSmall!
                                           .copyWith(
                                               color: black,
                                               fontWeight: FontWeight.normal)),

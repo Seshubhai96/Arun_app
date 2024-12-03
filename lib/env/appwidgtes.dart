@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:arunmall/env/appexports.dart';
@@ -201,8 +202,8 @@ Widget networkImages({
                 );
               },
             )
-          : Image.network(
-              url,
+          : Image.memory(
+              base64Decode(url),
               width: size,
               height: size,
               fit: BoxFit.cover,

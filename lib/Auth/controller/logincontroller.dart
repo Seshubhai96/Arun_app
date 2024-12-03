@@ -16,6 +16,7 @@ class Logincontroller extends ChangeNotifier {
         final user = response["user"];
         //log(user.toString());
         box.write("type", user["type"]);
+        box.write("id", user["_id"]);
         box.write("token", response["token"]);
         navigateuser(context);
       }
@@ -45,7 +46,7 @@ class Logincontroller extends ChangeNotifier {
         endpoint: "auth/getbyid",
       );
       if (user != null) {
-        log(user.toString());
+        //log(user.toString());
         currentuser = user;
         notifyListeners();
       }
@@ -54,6 +55,28 @@ class Logincontroller extends ChangeNotifier {
     } catch (e) {
       log("Error GetBYid $e");
       usergetbyid = false;
+      notifyListeners();
+    }
+  }
+
+  var userupdatebyid = false;
+  updatebyid({payload}) async {
+    try {
+      userupdatebyid = true;
+      notifyListeners();
+      final user = await Api().postmethod(
+        endpoint: "auth/update",
+        body: payload,
+      );
+      log(user.toString());
+      if (user != null) {
+        getbyid();
+      }
+      userupdatebyid = false;
+      notifyListeners();
+    } catch (e) {
+      log("Error GetBYid $e");
+      userupdatebyid = false;
       notifyListeners();
     }
   }
