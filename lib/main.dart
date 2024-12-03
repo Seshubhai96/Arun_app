@@ -5,7 +5,8 @@ void main() async {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => Logincontroller()),
     ChangeNotifierProvider(create: (_) => Adminlandingcontroller()),
-    ChangeNotifierProvider(create: (_) => Roomcontroller())
+    ChangeNotifierProvider(create: (_) => Roomcontroller()),
+    ChangeNotifierProvider(create: (_) => Userscontroller())
   ], child: const MyApp()));
 }
 

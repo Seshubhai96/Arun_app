@@ -5,5 +5,6 @@ import 'package:arunmall/env/appexports.dart';
 class Adminlandingcontroller extends ChangeNotifier {
   callresources(context) {
     Provider.of<Roomcontroller>(context, listen: false).fetchrooms();
+    Provider.of<Userscontroller>(context, listen: false).fetchUsers();
   }
 }

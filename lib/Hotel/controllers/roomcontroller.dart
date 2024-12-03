@@ -8,32 +8,57 @@ class Roomcontroller extends ChangeNotifier {
   List<Roommodel> _roomList = [];
   List<Roommodel> get roomList => _roomList;
   List<bool> toggleitems = [false, false];
+  Roommodel roommodel = Roommodel.fromJson({});
+  assignadata(data) {
+    roommodel = Roommodel.fromJson(data);
+    toggleData(roommodel.type == "Ac" ? 0 : 1);
+    notifyListeners();
+  }
+
   toggleData(isselectd) {
     if (isselectd != null) {
       if (isselectd == 0) {
         //log("AC");
         toggleitems = [true, false];
+        roommodel.type = "Ac";
         notifyListeners();
       } else {
         // log("Non Ac");
         toggleitems = [false, true];
+        roommodel.type = "Deluxe";
         notifyListeners();
       }
     } else {
       toggleitems = [false, false];
+      roommodel.type = null;
       notifyListeners();
     }
   }
 
+  cleardata() {
+    roommodel = Roommodel.fromJson({});
+    toggleData(null);
+    notifyListeners();
+  }
+
   bool iscreateorupdateloading = false;
-  roomcreateorupdate({body, endpoint}) async {
+  roomcreateorupdate(context, {endpoint}) async {
     try {
       iscreateorupdateloading = true;
       notifyListeners();
-      final response = await Api().postmethod(body: body, endpoint: endpoint);
+      final response = await Api().postmethod(
+          body: roommodel.sId == null
+              ? roommodel.createjson()
+              : roommodel.toJson(),
+          endpoint: endpoint);
+      //log(response.toString());
       if (response != null) {
-        log(response.toString());
+        Navigator.pop(context);
+        fetchrooms();
+        cleardata();
       }
+      iscreateorupdateloading = false;
+      notifyListeners();
     } catch (e) {
       iscreateorupdateloading = false;
       notifyListeners();

@@ -10,7 +10,7 @@ class Api {
       final url = Uri.parse("$baseurl$endpoint");
       final response =
           await http.post(url, body: jsonEncode(body), headers: headers);
-      if (response.statusCode == 200) {
+      if (response.statusCode>=200&&response.statusCode<300) {
         final extractres = json.decode(response.body);
         return extractres?["data"];
       }
@@ -28,7 +28,7 @@ class Api {
       final response = await http.post(url,
           body: jsonEncode(body ?? {}), headers: domainheaders());
       //log(domainheaders().toString());
-      if (response.statusCode == 200) {
+      if (response.statusCode>=200&&response.statusCode<300) {
         final extractres = json.decode(response.body);
         return extractres?["data"];
       }

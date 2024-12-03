@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:arunmall/env/appexports.dart';
 
 class Roomsview extends StatefulWidget {
@@ -40,8 +38,14 @@ class _RoomsviewState extends State<Roomsview> {
                           return Card(
                             color: whitebg,
                             child: ListTile(
+                              trailing: IconButton(
+                                  onPressed: () {
+                                    roomctrl.assignadata(roomdata.toJson());
+                                    roomdaiog();
+                                  },
+                                  icon: const Icon(Icons.edit_note)),
                               title: Apptextwidget(
-                                "Room No : ${roomdata.roomnumber ?? "-"}",
+                                "Room No : ${roomdata.roomnumber?.text ?? "-"}",
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleLarge!
@@ -60,69 +64,7 @@ class _RoomsviewState extends State<Roomsview> {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           onPressed: () {
-            // showAppDialog(context: context);
-            showAppDialog(
-                context: context,
-                alert: appdailog(
-                  context,
-                  //ationtitleyes: "Add",
-                  actionsyes: () {
-                    var payload = {
-                      'roomnumber': roomctrl.rnCtrl.text,
-                      'type': roomctrl.toggleitems[0]
-                          ? "Ac"
-                          : roomctrl.toggleitems[1]
-                              ? "Nonac"
-                              : null
-                    };
-                    log(payload.toString());
-                  },
-                  alert: Apptextwidget(
-                    "Add New Room",
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  content: Consumer<Roomcontroller>(
-                      builder: (context, roomCntrl, child) {
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        apptextfield(
-                            label: "Room Number",
-                            hint: "Enter Room Number",
-                            keyboardtype: const TextInputType.numberWithOptions(
-                                decimal: true, signed: true),
-                            controller: roomctrl.rnCtrl,
-                            maxlenth: 3,
-                            formatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                            ]),
-                        const Appsized(height: 10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Apptextwidget(
-                              "RoomType",
-                              style: Theme.of(context).textTheme.labelMedium,
-                            ),
-                            const Appsized(
-                              height: 10,
-                            ),
-                            toggle(context, titl1: "Ac", title2: "Non Ac",
-                                tap: (val) {
-                              roomCntrl.toggleData(val);
-                              // roomctrl.changetrigger(val);
-                            }, isSelected: roomCntrl.toggleitems),
-                          ],
-                        )
-                      ],
-                    );
-                  }),
-                  actionno: () {
-                    Navigator.pop(context);
-                  },
-                ));
+            roomdaiog();
           },
           child: const Icon(
             Icons.add,
@@ -131,5 +73,71 @@ class _RoomsviewState extends State<Roomsview> {
         ),
       );
     });
+  }
+
+  roomdaiog() {
+    showAppDialog(
+        context: context,
+        alert: Consumer<Roomcontroller>(builder: (_, roomctrl, child) {
+          return appdailog(
+            context,
+            //ationtitleyes: "Add",
+            actionsyes: () {
+              if (roomctrl.roommodel.sId == null) {
+                // log(roomctrl.roommodel.createjson().toString());
+                roomctrl.roomcreateorupdate(context, endpoint: "rooms/create");
+              } else {
+                roomctrl.roomcreateorupdate(context,
+                    endpoint: "rooms/editroom");
+                // log(roomctrl.roommodel.toJson().toString());
+              }
+            },
+            alert: Apptextwidget(
+              roomctrl.roommodel.sId == null ? "Add Room" : "Edit Room",
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            content: roomctrl.iscreateorupdateloading
+                ? const Loader()
+                : Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      apptextfield(
+                          label: "Room Number",
+                          hint: "Enter Room Number",
+                          keyboardtype: const TextInputType.numberWithOptions(
+                              decimal: true, signed: true),
+                          controller: roomctrl.roommodel.roomnumber!,
+                          maxlenth: 3,
+                          formatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ]),
+                      const Appsized(height: 10),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Apptextwidget(
+                            "RoomType",
+                            style: Theme.of(context).textTheme.labelMedium,
+                          ),
+                          const Appsized(
+                            height: 10,
+                          ),
+                          toggle(context, titl1: "Ac", title2: "Non Ac",
+                              tap: (val) {
+                            roomctrl.toggleData(val);
+                            // roomctrl.changetrigger(val);
+                          }, isSelected: roomctrl.toggleitems),
+                        ],
+                      )
+                    ],
+                  ),
+            actionno: () {
+              Navigator.pop(context);
+              roomctrl.cleardata();
+            },
+          );
+        }));
   }
 }

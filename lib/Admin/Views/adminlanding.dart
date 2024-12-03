@@ -32,7 +32,11 @@ class _AdminlandingState extends State<Adminlanding> {
       floatingActionButton: SpeedDial(
         backgroundColor: CupertinoColors.activeBlue,
         children: [
-          SpeedDialChild(child: const Icon(Icons.person_add)),
+          SpeedDialChild(
+              child: const Icon(Icons.person_add),
+              onTap: () {
+                NavigationSlide(context, const Usersview());
+              }),
           SpeedDialChild(child: const Icon(Icons.post_add)),
           SpeedDialChild(
               child: const Icon(Icons.hotel),

@@ -16,6 +16,9 @@ export 'package:arunmall/Common/Views/splash.dart';
 export 'package:arunmall/Common/Views/profile.dart';
 export 'package:arunmall/Common/Views/loader.dart';
 export 'package:arunmall/Common/Views/eptyWidget.dart';
+export 'package:arunmall/Common/Users/UsersView.dart';
+export 'package:arunmall/Common/Users/Controllers/userscontroller.dart';
+export 'package:arunmall/Common/Users/Models/UsersModel.dart';
 
 //Auth
 export 'package:arunmall/Auth/controller/logincontroller.dart';
