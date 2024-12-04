@@ -1,6 +1,5 @@
 // ignore_for_file: invalid_use_of_protected_member
 
-
 import 'package:arunmall/env/appexports.dart';
 
 class Profile extends StatefulWidget {
@@ -59,7 +58,13 @@ class _ProfileState extends State<Profile> {
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: black),
-                            onPressed: () {},
+                            onPressed: () {
+                              NavigationSlide(
+                                  context,
+                                  const Profileupdate(
+                                    userid: null,
+                                  ));
+                            },
                             child: Apptextwidget(
                               "Edit Profile",
                               style: Theme.of(context)

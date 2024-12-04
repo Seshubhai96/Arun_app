@@ -25,4 +25,26 @@ class Userscontroller extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  var usergetbyid = false;
+  UsersModel usersModel = UsersModel.fromJson({});
+  getbyuserid({payload}) async {
+    try {
+      usergetbyid = true;
+      notifyListeners();
+      final user = await Api()
+          .postmethod(endpoint: "auth/getbyid", body: {"id": payload});
+      if (user != null) {
+        //log(user.toString());
+        usersModel = UsersModel.fromJson(user);
+        notifyListeners();
+      }
+      usergetbyid = false;
+      notifyListeners();
+    } catch (e) {
+      log("Error GetBYid $e");
+      usergetbyid = false;
+      notifyListeners();
+    }
+  }
 }

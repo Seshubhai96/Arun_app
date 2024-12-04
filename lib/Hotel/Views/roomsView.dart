@@ -12,9 +12,30 @@ class _RoomsviewState extends State<Roomsview> {
   Widget build(BuildContext context) {
     return Consumer<Roomcontroller>(builder: (context, roomctrl, child) {
       return Scaffold(
-        appBar: const Themeappbar(
+        appBar: Themeappbar(
           isback: true,
           title: "Rooms",
+          actions: [
+            GestureDetector(
+              onTap: () {
+                roomdaiog();
+              },
+              child: Container(
+                margin: const EdgeInsets.only(right: 15),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                decoration: BoxDecoration(
+                    color: primary, borderRadius: BorderRadius.circular(10)),
+                child: Apptextwidget(
+                  "+ Add Room",
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelMedium
+                      ?.copyWith(color: whitebg),
+                ),
+              ),
+            )
+          ],
         ),
         body: RefreshIndicator(
           onRefresh: () async {
@@ -27,46 +48,36 @@ class _RoomsviewState extends State<Roomsview> {
                 ? const Loader()
                 : roomctrl.roomList.isEmpty
                     ? const Eptywidget()
-                    : ListView.builder(
-                        itemCount: roomctrl.roomList.length,
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        itemBuilder: (_, i) {
-                          final roomdata = roomctrl.roomList[i];
-                          return Card(
-                            color: whitebg,
-                            child: ListTile(
-                              trailing: IconButton(
-                                  onPressed: () {
-                                    roomctrl.assignadata(roomdata.toJson());
-                                    roomdaiog();
-                                  },
-                                  icon: const Icon(Icons.edit_note)),
-                              title: Apptextwidget(
-                                "Room No : ${roomdata.roomnumber?.text ?? "-"}",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleLarge!
-                                    .copyWith(
-                                        fontWeight: FontWeight.w300,
-                                        color: black),
-                              ),
-                              subtitle: Apptextwidget(roomdata.type ?? "-"),
-                            ),
-                          );
-                        }),
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: primary,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          onPressed: () {
-            roomdaiog();
-          },
-          child: const Icon(
-            Icons.add,
-            color: whitebg,
+                    : Expanded(
+                        child: ListView.builder(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            itemCount: roomctrl.roomList.length,
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            itemBuilder: (_, i) {
+                              final roomdata = roomctrl.roomList[i];
+                              return Card(
+                                color: whitebg,
+                                child: ListTile(
+                                  trailing: IconButton(
+                                      onPressed: () {
+                                        roomctrl.assignadata(roomdata.toJson());
+                                        roomdaiog();
+                                      },
+                                      icon: const Icon(Icons.edit_note)),
+                                  title: Apptextwidget(
+                                    "Room No : ${roomdata.roomnumber?.text ?? "-"}",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            color: black),
+                                  ),
+                                  subtitle: Apptextwidget(roomdata.type ?? "-"),
+                                ),
+                              );
+                            }),
+                      ),
           ),
         ),
       );

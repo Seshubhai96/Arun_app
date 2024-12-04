@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:arunmall/env/appexports.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 class Filepickercontroller extends ChangeNotifier {
   Future sudhaimage(context) async {
@@ -13,6 +14,9 @@ class Filepickercontroller extends ChangeNotifier {
       log(fileExtension);
       if (['jpg', 'jpeg', 'png', 'gif', '.jpg', '.jpeg', '.png', '.gif']
           .contains(fileExtension)) {
+        // var bytes = await result.files.single.xFile.readAsBytes();
+        // log("Before Compress ${bytes.lengthInBytes}");
+
         await cropImage(context, imageFile: result.files.single.xFile.path);
       } else {
         showAdaptiveDialog(
@@ -30,6 +34,15 @@ class Filepickercontroller extends ChangeNotifier {
       // log(result.files.single.xFile.path);
       //log("${result.files.single.size / 1024} kb"); // Convert bytes to KB
     }
+  }
+
+  Future<Uint8List?> testCompressFile(CroppedFile file) async {
+    var result = await FlutterImageCompress.compressWithFile(
+      file.path,
+      quality: 20,
+    );
+    //log("After Compress ${result?.lengthInBytes}");
+    return result;
   }
 
   bool packetloading = false;
@@ -62,17 +75,20 @@ class Filepickercontroller extends ChangeNotifier {
     if (croppedFile != null) {
       packetloading = true;
       notifyListeners();
-      log("Cropped data ${await croppedFile.readAsBytes()}");
-      log(base64Encode(await croppedFile.readAsBytes()));
+      // log("Cropped data ${await croppedFile.readAsBytes()}");
+      // log(base64Encode(await croppedFile.readAsBytes()));
+      var comprssedfile = await testCompressFile(croppedFile);
       final box = GetStorage();
       var payload = {
-        "image": base64Encode(await croppedFile.readAsBytes().whenComplete(() {
-          packetloading = false;
-          notifyListeners();
-        })),
+        "image": comprssedfile == null ? null : base64Encode(comprssedfile),
+        //  base64Encode(await croppedFile.readAsBytes().whenComplete(() {
+        //   packetloading = false;
+        //   notifyListeners();
+        // })),
         "_id": box.read("id"),
       };
-
+      packetloading = false;
+      notifyListeners();
       Provider.of<Logincontroller>(context, listen: false)
           .updatebyid(payload: payload);
 

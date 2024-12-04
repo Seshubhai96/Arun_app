@@ -1,6 +1,11 @@
 # This is a generated file; do not edit or check into version control.
 cunning_document_scanner=C:\\Users\\LionO\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\cunning_document_scanner-1.2.3\\
 file_picker=C:\\Users\\LionO\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\file_picker-8.1.4\\
+flutter_image_compress=C:\\Users\\LionO\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\flutter_image_compress-2.3.0\\
+flutter_image_compress_common=C:\\Users\\LionO\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\flutter_image_compress_common-1.0.5\\
+flutter_image_compress_macos=C:\\Users\\LionO\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\flutter_image_compress_macos-1.0.2\\
+flutter_image_compress_ohos=C:\\Users\\LionO\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\flutter_image_compress_ohos-0.0.3\\
+flutter_image_compress_web=C:\\Users\\LionO\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\flutter_image_compress_web-0.1.4+1\\
 flutter_plugin_android_lifecycle=C:\\Users\\LionO\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\flutter_plugin_android_lifecycle-2.0.23\\
 google_mlkit_commons=C:\\Users\\LionO\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\google_mlkit_commons-0.9.0\\
 google_mlkit_text_recognition=C:\\Users\\LionO\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\google_mlkit_text_recognition-0.14.0\\
