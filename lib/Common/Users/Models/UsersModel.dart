@@ -38,13 +38,13 @@ class UsersModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
     data['_id'] = sId;
-    data['fullname'] = fullname;
+    data['fullname'] = fullname?.text;
     data['role'] = role;
     data['type'] = type;
     data['image'] = image;
     data['gender'] = gender;
-    data['email'] = email;
-    data['password'] = password;
+    data['email'] = email?.text;
+    data['password'] = password?.text;
 
     return data;
   }

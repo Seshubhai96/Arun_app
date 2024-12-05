@@ -100,7 +100,7 @@ Widget fillButton(context,
       decoration: BoxDecoration(
           color: primary, borderRadius: BorderRadius.circular(10)),
       child: load
-          ? const CircularProgressIndicator(color: primary)
+          ? const Center(child: CircularProgressIndicator(color: primary))
           : Apptextwidget(title,
               style: stle ??
                   Theme.of(context)
@@ -411,7 +411,7 @@ Widget toggle(
 
 Widget usersCard(context, {image, ctrl, onPressed}) {
   return Card(
-    color: grey,
+    color: whitebg,
     child: Stack(
       children: [
         Padding(
@@ -442,15 +442,8 @@ Widget usersCard(context, {image, ctrl, onPressed}) {
                   ),
                   Apptextwidget(
                     ctrl.role.toString(),
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          fontWeight: FontWeight.w300,
-                          color: black,
-                        ),
-                  ),
-                  Apptextwidget(
-                    "Phone :7534878973",
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          fontWeight: FontWeight.w300,
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontWeight: FontWeight.w400,
                           color: black,
                         ),
                   ),
@@ -540,7 +533,7 @@ Widget MydropDownApi(
       label: mandatory
           ? mandatoryRichText(label: labelText)
           : Text(
-              labelText,
+              labelText ?? "",
               // style: TxtStls.txtStle,
             ),
       isDense: true,
@@ -551,7 +544,7 @@ Widget MydropDownApi(
     ),
     isExpanded: true,
     hint: Text(
-      hint,
+      hint ?? "",
       //style: TxtStls.txtStle,
     ),
     items: items,

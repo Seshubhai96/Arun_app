@@ -26,16 +26,57 @@ class Userscontroller extends ChangeNotifier {
     }
   }
 
+  bool usersroleloading = false;
+  List<UserroleModel> _userrolelist = [];
+  List<UserroleModel> get userrolelist => _userrolelist;
+  fetchroleUsers() async {
+    try {
+      usersroleloading = true;
+      notifyListeners();
+      final usersrole = await Api().postmethod(endpoint: "role/rolelists");
+      if (usersrole != null) {
+        List userrolelist = usersrole ?? [];
+        _userrolelist =
+            userrolelist.map((e) => UserroleModel.fromJson(e)).toList();
+        notifyListeners();
+        log("Usersrole Responce $usersrole ");
+      }
+      usersroleloading = false;
+      notifyListeners();
+    } catch (e) {
+      log("Get all users error $e");
+      usersroleloading = false;
+      notifyListeners();
+    }
+  }
+
+  changegender(val) {
+    usersModel.gender = val;
+    notifyListeners();
+    //log(usersModel.toJson().toString());
+  }
+
+  changerole(val) {
+    usersModel.role = val;
+    notifyListeners();
+  }
+
+  changetype(val) {
+    usersModel.type = val;
+    notifyListeners();
+  }
+
   var usergetbyid = false;
   UsersModel usersModel = UsersModel.fromJson({});
   getbyuserid({payload}) async {
     try {
+      usersModel = UsersModel.fromJson({});
       usergetbyid = true;
       notifyListeners();
       final user = await Api()
           .postmethod(endpoint: "auth/getbyid", body: {"id": payload});
       if (user != null) {
-        //log(user.toString());
+        log(user.toString());
         usersModel = UsersModel.fromJson(user);
         notifyListeners();
       }

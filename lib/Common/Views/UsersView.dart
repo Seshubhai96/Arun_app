@@ -12,10 +12,31 @@ class _MyWidgetState extends State<Usersview> {
   Widget build(BuildContext context) {
     return Consumer<Userscontroller>(builder: (context, userctrl, child) {
       return Scaffold(
-          backgroundColor: whitebg,
-          appBar: const Themeappbar(
+          backgroundColor: grey,
+          appBar: Themeappbar(
             isback: true,
             title: "Users",
+            actions: [
+              GestureDetector(
+                onTap: () {
+                  NavigationSlide(context, Profileupdate(userid: context));
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(right: 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                  decoration: BoxDecoration(
+                      color: primary, borderRadius: BorderRadius.circular(10)),
+                  child: Apptextwidget(
+                    "+ Add User",
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelMedium
+                        ?.copyWith(color: whitebg),
+                  ),
+                ),
+              )
+            ],
           ),
           body: RefreshIndicator(
             onRefresh: () async {

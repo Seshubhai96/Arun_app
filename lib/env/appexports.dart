@@ -24,6 +24,7 @@ export 'package:arunmall/Common/Users/Controllers/userscontroller.dart';
 export 'package:arunmall/Common/Users/Models/UsersModel.dart';
 export 'package:arunmall/Common/Users/Controllers/filepickerController.dart';
 export 'package:arunmall/Common/Views/ProfileUpdate.dart';
+export 'package:arunmall/Common/Users/Models/UserroleModel.dart';
 
 //Auth
 export 'package:arunmall/Auth/controller/logincontroller.dart';
