@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:developer';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/foundation.dart';
 import 'package:arunmall/env/appexports.dart';
 import 'package:flutter/cupertino.dart';
@@ -99,7 +100,7 @@ Widget fillButton(context,
       decoration: BoxDecoration(
           color: primary, borderRadius: BorderRadius.circular(10)),
       child: load
-          ? const CircularProgressIndicator(color: primary)
+          ? const Center(child: CircularProgressIndicator(color: primary))
           : Apptextwidget(title,
               style: stle ??
                   Theme.of(context)
@@ -406,4 +407,343 @@ Widget toggle(
               ),
         ]),
   );
+}
+
+Widget usersCard(context, {image, ctrl, onPressed}) {
+  return Card(
+    color: whitebg,
+    child: Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              networkImages(
+                url: image ?? "assets/swagth.jpg",
+                size: 50.0,
+              ),
+              const SizedBox(width: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Apptextwidget(
+                    ctrl.fullname?.text ?? "",
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: black,
+                        ),
+                  ),
+                  Apptextwidget(
+                    ctrl.email?.text ?? "",
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          fontWeight: FontWeight.w300,
+                          color: black,
+                        ),
+                  ),
+                  Apptextwidget(
+                    ctrl.role.toString(),
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontWeight: FontWeight.w400,
+                          color: black,
+                        ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        Positioned(
+          top: 0,
+          right: 0,
+          child: IconButton(
+            onPressed: onPressed,
+            icon: const Icon(
+              Icons.edit_note,
+              color: Colors.black,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+// ignore: non_constant_identifier_names
+Widget MydropDown(
+    {value, hint, labelText, required List items, required onChanged}) {
+  return DropdownButtonFormField2(
+    value: value,
+    isDense: false,
+    dropdownStyleData: DropdownStyleData(
+        maxHeight: 250,
+        isOverButton: true,
+        padding: const EdgeInsets.only(right: 10),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5), color: Colors.white),
+        scrollbarTheme: const ScrollbarThemeData(
+            radius: Radius.circular(6), thickness: WidgetStatePropertyAll(6))),
+    decoration: InputDecoration(
+      labelText: labelText ?? "",
+      // labelStyle: TxtStls.txtStle,
+      isDense: true,
+      contentPadding: EdgeInsets.zero,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5),
+      ),
+    ),
+    isExpanded: true,
+    hint: Text(
+      hint ?? "",
+      //  style: TxtStls.txtStle,
+    ),
+    barrierLabel: "Select Gender",
+    items: items
+        .map((item) => DropdownMenuItem(
+              value: item.toString(),
+              child: Text(
+                item.toString(),
+                // style: TxtStls.txtStle,
+              ),
+            ))
+        .toList(),
+    onChanged: onChanged,
+  );
+}
+
+Widget MydropDownApi(
+    {value,
+    hint,
+    labelText,
+    required items,
+    required onChanged,
+    mandatory = false}) {
+  return DropdownButtonFormField2(
+    autovalidateMode: AutovalidateMode.onUserInteraction,
+    value: value,
+    isDense: false,
+    dropdownStyleData: DropdownStyleData(
+        maxHeight: 250,
+        isOverButton: true,
+        // padding: const EdgeInsets.only(right: 10),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5), color: Colors.white),
+        scrollbarTheme: const ScrollbarThemeData(
+            radius: Radius.circular(6), thickness: WidgetStatePropertyAll(6))),
+    decoration: InputDecoration(
+      label: mandatory
+          ? mandatoryRichText(label: labelText)
+          : Text(
+              labelText ?? "",
+              // style: TxtStls.txtStle,
+            ),
+      isDense: true,
+      contentPadding: EdgeInsets.zero,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5),
+      ),
+    ),
+    isExpanded: true,
+    hint: Text(
+      hint ?? "",
+      //style: TxtStls.txtStle,
+    ),
+    items: items,
+    onChanged: onChanged,
+    validator: mandatory
+        ? (value) {
+            if (value == "0") {
+              return "";
+            } else if (value == null) {
+              return "";
+            } else {
+              return null;
+            }
+          }
+        : null,
+  );
+}
+
+// Widget MultiDropdown(context,
+//     {lable,
+//     hint,
+//     List? selectedList,
+//     mainlist,
+//     required Function(bool value, String data) onTap}) {
+//   Size size = MediaQuery.of(context).size;
+//   List<dynamic> searchList = List.from(mainlist);
+//   return Consumer<BasicHealthMngController>(builder: (context, dr, child) {
+//     return Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Text(lable, style: TxtStls.txtStle),
+//         InkWell(
+//           child: Container(
+//             alignment: Alignment.center,
+//             padding: const EdgeInsets.symmetric(horizontal: 8),
+//             height: 50,
+//             width: size.width,
+//             decoration: BoxDecoration(
+//                 borderRadius: BorderRadius.circular(10),
+//                 border: Border.all(color: txtColor.withOpacity(0.5))),
+//             child: Row(
+//               crossAxisAlignment: CrossAxisAlignment.center,
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: [
+//                 Expanded(
+//                   child: selectedList!.isEmpty
+//                       ? Text(hint, style: TxtStls.txtStle)
+//                       : ListView(
+//                           physics: const BouncingScrollPhysics(),
+//                           shrinkWrap: true,
+//                           scrollDirection: Axis.horizontal,
+//                           children: selectedList
+//                               .map((e) => Padding(
+//                                     padding: const EdgeInsets.symmetric(
+//                                         horizontal: 4),
+//                                     child: Chip(
+//                                       label: Text(e.toString(),
+//                                           style: TxtStls.txtStle),
+//                                       onDeleted: () {
+//                                         dr.RemoveData(
+//                                             slectedlist: selectedList,
+//                                             all: false,
+//                                             value: e.toString());
+//                                       },
+//                                     ),
+//                                   ))
+//                               .toList()),
+//                 ),
+//                 IconButton(
+//                     onPressed: () {
+//                       // dr.RemoveData(
+//                       //     slectedlist: selectedList, all: true, value: "");
+//                     },
+//                     icon: const Icon(
+//                       Icons.cancel_rounded,
+//                       color: Colors.red,
+//                     ))
+//               ],
+//             ),
+//           ),
+//           onTap: () {
+//             showModalBottomSheet(
+//               shape: ShapeBorder.lerp(
+//                 const RoundedRectangleBorder(
+//                   borderRadius: BorderRadius.only(
+//                     topLeft: Radius.circular(20),
+//                     topRight: Radius.circular(20),
+//                   ),
+//                 ),
+//                 RoundedRectangleBorder(
+//                   borderRadius: BorderRadius.circular(0.0),
+//                 ),
+//                 0.5,
+//               ),
+//               context: context,
+//               isScrollControlled: true,
+//               builder: (BuildContext context) {
+//                 return Consumer<Logincontroller>(
+//                     builder: (context, dynamic controller, child) {
+//                   return DraggableScrollableSheet(
+//                     maxChildSize: 0.8,
+//                     expand: false,
+//                     builder: (BuildContext context,
+//                         ScrollController scrollController) {
+//                       return Container(
+//                         padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+//                         decoration: const BoxDecoration(
+//                           color: Colors.white,
+//                           borderRadius: BorderRadius.only(
+//                             topLeft: Radius.circular(16.0),
+//                             topRight: Radius.circular(16.0),
+//                           ),
+//                         ),
+//                         child: Column(
+//                           children: [
+//                             // mySearch(context,
+//                             //     controller:TextEditingController() ,
+//                             //     hint: "Search Test....", search: (value) {
+//                             //   dr.searchList(value, searchList, mainlist);
+//                             // }),
+//                             Expanded(
+//                               child: ListView.builder(
+//                                 shrinkWrap: true,
+//                                 physics: const BouncingScrollPhysics(),
+//                                 controller: scrollController,
+//                                 itemCount: searchList.length,
+//                                 itemBuilder: (BuildContext context, int index) {
+//                                   final data = searchList[index];
+//                                   return CheckboxListTile(
+//                                     activeColor: primary,
+//                                     controlAffinity:
+//                                         ListTileControlAffinity.leading,
+//                                     value: selectedList.contains(data),
+//                                     onChanged: (value) {
+//                                       onTap(value!, data);
+//                                     },
+//                                     title: Text(
+//                                       data.toString(),
+//                                     ),
+//                                   );
+//                                 },
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                       );
+//                     },
+//                   );
+//                 });
+//               },
+//             );
+//           },
+//         ),
+//       ],
+//     );
+//   });
+// }
+
+Widget mySearch(BuildContext context,
+    {required TextEditingController? controller,
+    required hint,
+    required search}) {
+  return TextField(
+      textInputAction: TextInputAction.search,
+      controller: controller,
+      cursorColor: primary,
+      cursorHeight: 20,
+      decoration: InputDecoration(
+        hintText: hint,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        //hintStyle: TxtStls.txtStle,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        suffixIcon: controller!.text.isNotEmpty
+            ? IconButton(
+                icon: const Icon(
+                  Icons.close,
+                  color: black,
+                ),
+                onPressed: () {
+                  controller.clear();
+                  search("");
+                  FocusScope.of(context).requestFocus(FocusNode());
+                },
+              )
+            : const Icon(
+                Icons.search,
+                color: black,
+              ),
+      ),
+      onChanged: search);
+}
+
+mandatoryRichText({label}) {
+  return RichText(
+      text: TextSpan(text: label, children: const [
+    WidgetSpan(
+        child: Appsized(
+      width: 5,
+    )),
+    TextSpan(text: "*", style: TextStyle(color: redclr))
+  ]));
 }

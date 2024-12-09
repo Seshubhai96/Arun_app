@@ -60,7 +60,7 @@ class Logincontroller extends ChangeNotifier {
   }
 
   var userupdatebyid = false;
-  updatebyid({payload}) async {
+  updatebyid({payload, call}) async {
     try {
       userupdatebyid = true;
       notifyListeners();
@@ -70,7 +70,7 @@ class Logincontroller extends ChangeNotifier {
       );
       log(user.toString());
       if (user != null) {
-        getbyid();
+        call ?? getbyid();
       }
       userupdatebyid = false;
       notifyListeners();
